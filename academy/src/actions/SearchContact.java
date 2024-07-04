@@ -13,8 +13,8 @@ public class SearchContact {
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("contacts");
         EntityManager manager = factory.createEntityManager();
 
-        String jpql = "SELECT c FROM Contact c";
-        Query query = manager.createQuery(jpql);
+        String sql = "SELECT * FROM contacts";
+        Query query = manager.createNativeQuery(sql, Contact.class);
 
         List<Contact> listContacts = query.getResultList();
 
@@ -24,12 +24,13 @@ public class SearchContact {
         return listContacts;
     }
 
-    public List<Contact> getContactsByLetter() {
+    public List<Contact> getContactsByLetter(String initialLetter) {
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("contacts");
         EntityManager manager = factory.createEntityManager();
 
-        String jpql = "SELECT c FROM CONTACTS WHERE NAME IS LIKE ?";
-        Query query = manager.createQuery(jpql);
+        String sql = "SELECT * FROM contacts WHERE SUBSTRING(name, 1, 1) = :param";
+        Query query = manager.createNativeQuery(sql, Contact.class);
+        query.setParameter("param", initialLetter);
 
         List<Contact> listContacts = query.getResultList();
 
