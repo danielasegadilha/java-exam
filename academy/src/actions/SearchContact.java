@@ -23,4 +23,19 @@ public class SearchContact {
 
         return listContacts;
     }
+
+    public List<Contact> getContactsByLetter() {
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("contacts");
+        EntityManager manager = factory.createEntityManager();
+
+        String jpql = "SELECT c FROM CONTACTS WHERE NAME IS LIKE ?";
+        Query query = manager.createQuery(jpql);
+
+        List<Contact> listContacts = query.getResultList();
+
+        manager.close();
+        factory.close();
+
+        return listContacts;
+    }
 }
