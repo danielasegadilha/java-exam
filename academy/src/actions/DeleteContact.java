@@ -7,24 +7,26 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public class DeleteContact {
-    public static void main(String[] args) {
-        //1. Conectar ao operador do ORM/JPA
+
+    public void delete(Long contactId) {
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("contacts");
         EntityManager manager = factory.createEntityManager();
 
-        //2. Buscar o objeto a ser excluido
-        Contact contact = new Contact();
-        contact.setId(1L);
-        contact = manager.find(Contact.class, contact.getId());
-
-        //3. Operar com "remove"
         manager.getTransaction().begin();
-        manager.remove(contact);
-        manager.getTransaction().commit();
 
-        System.out.println("Tarefa excluida!");
+        Contact contact = manager.find(Contact.class, contactId);
+
+        if (contact != null) {
+            manager.remove(contact);
+            System.out.println("Contact deleted successfully.");
+        } else {
+            System.out.println("Contact not found.");
+        }
+
+        manager.getTransaction().commit();
 
         manager.close();
         factory.close();
     }
+
 }

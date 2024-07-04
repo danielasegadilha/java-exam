@@ -9,10 +9,11 @@ import javax.persistence.Persistence;
 public class UpdateContact {
     public static void main(String[] args) {
         Contact contact = new Contact();
-        contact.setId(2L);
-        contact.setDescricao("Estudar Java ate o fim");
-        contact.setFinalizada(false);
-        contact.setDataFinalizacao(null);
+        contact.setName("Daniela");
+        contact.setEmail("segadilha.senac@hotmail.com");
+        contact.setNationality("Brazilian");
+        contact.setCpf("12345678901");
+        contact.setAddress("Fool street");
 
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("contacts");
         EntityManager manager = factory.createEntityManager();
